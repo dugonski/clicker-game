@@ -1,0 +1,49 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Snap down by exactly one art pixel of the planet when pressed */
+.button:active {
+  transform: translateY(var(--px));
+}
+
+.button:focus-visible {
+  outline: var(--px) solid var(--accent);
+  outline-offset: 8px;
+}
+
+.floater {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-title);
+  font-size: 14px;
+  color: var(--stardust);
+  text-shadow: 2px 2px 0 var(--ink);
+  white-space: nowrap;
+  animation: float 0.8s steps(8) forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -96px);
+    opacity: 0;
+  }
+}

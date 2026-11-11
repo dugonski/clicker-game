@@ -1,0 +1,127 @@
+.shop {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.heading {
+  margin: 0 0 1rem;
+  font-family: var(--font-title);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.empty {
+  margin: 0;
+  color: var(--muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 var(--px);
+}
+
+.building,
+.upgrade,
+.locked {
+  --edge: var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: var(--panel);
+  border: none;
+  /* Four offset shadows draw a pixel border with notched corners */
+  box-shadow:
+    0 calc(-1 * var(--px)) 0 0 var(--edge),
+    0 var(--px) 0 0 var(--edge),
+    calc(-1 * var(--px)) 0 0 0 var(--edge),
+    var(--px) 0 0 0 var(--edge);
+  box-sizing: border-box;
+}
+
+.building,
+.upgrade {
+  cursor: pointer;
+}
+
+.upgrade {
+  --edge: #68386c;
+}
+
+.building:hover:enabled,
+.upgrade:hover:enabled {
+  --edge: var(--accent);
+  background: var(--panel-hover);
+}
+
+.building:active:enabled,
+.upgrade:active:enabled {
+  transform: translateY(var(--px));
+}
+
+.building:focus-visible,
+.upgrade:focus-visible {
+  outline: var(--px) solid var(--accent);
+  outline-offset: var(--px);
+}
+
+.building:disabled,
+.upgrade:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.locked {
+  opacity: 0.45;
+}
+
+.icon {
+  flex: none;
+  padding: var(--px);
+  /* A lighter slot so the dark sprite outlines stay visible */
+  background: #3a4272;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 22px;
+}
+
+.detail {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.cost {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  color: var(--stardust);
+}
+
+.count {
+  flex: none;
+  min-width: 2ch;
+  font-family: var(--font-title);
+  font-size: 16px;
+  text-align: right;
+  color: #8b9bb4;
+}
