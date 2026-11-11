@@ -10,6 +10,7 @@ import {
   travelProgress,
 } from './game/logic';
 import { useGame } from './hooks/useGame';
+import PixelSprite from './Components/PixelSprite/PixelSprite';
 import Mission from './Components/Mission/Mission';
 import PlanetClicker from './Components/PlanetClicker/PlanetClicker';
 import Shop from './Components/Shop/Shop';
@@ -47,7 +48,7 @@ export default function App() {
 
         <div className={styles.stats}>
           <p className={styles.stardust} aria-label="Stardust">
-            ✨ {formatNumber(state.stardust)}
+            <PixelSprite name="stardust" size={36} /> {formatNumber(state.stardust)}
           </p>
           <p className={styles.rates}>
             {formatNumber(stardustPerSecond(state))} per second · {formatNumber(perClick)} per click

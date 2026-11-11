@@ -1,32 +1,36 @@
 :root {
-  --text: #eef1ff;
+  --text: #f4f4f4;
   --muted: #9aa3c7;
-  --accent: #7c9cff;
-  --stardust: #ffd98a;
-  --panel: rgba(255, 255, 255, 0.05);
-  --panel-hover: rgba(255, 255, 255, 0.1);
-  --border: rgba(255, 255, 255, 0.12);
+  --accent: #2ce8f5;
+  --stardust: #fee761;
+  --panel: #151a36;
+  --panel-hover: #212850;
+  --border: #3d4576;
+  --ink: #1a1c2c;
+  /* One "art pixel" of the interface */
+  --px: 4px;
+  --planet-size: 256px;
+  --font-title: 'Press Start 2P', monospace;
+  --font-body: 'VT323', monospace;
   color-scheme: dark;
+}
+
+@media (max-width: 340px) {
+  :root {
+    --planet-size: 192px;
+  }
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1;
+  -webkit-font-smoothing: none;
+  font-smooth: never;
   color: var(--text);
-  background-color: #05060f;
-  /* A sparse starfield built from tiled dots, over a faint nebula */
-  background-image:
-    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
-    radial-gradient(1px 1px at 90px 140px, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 160px 70px, rgba(200, 215, 255, 0.9), transparent),
-    radial-gradient(1px 1px at 230px 190px, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(1.5px 1.5px at 60px 240px, rgba(255, 235, 200, 0.8), transparent),
-    radial-gradient(ellipse at 25% 20%, rgba(70, 60, 160, 0.3), transparent 55%),
-    radial-gradient(ellipse at 80% 85%, rgba(30, 90, 150, 0.22), transparent 50%);
-  background-size: 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 100% 100%, 100% 100%;
+  background-color: #07081a;
+  /* Tiled starfield made of square pixels */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' shape-rendering='crispEdges'%3E%3Cg fill='%23fff'%3E%3Crect x='20' y='28' width='4' height='4'/%3E%3Crect x='148' y='60' width='4' height='4' fill='%23c0cbdc'/%3E%3Crect x='88' y='140' width='2' height='2'/%3E%3Crect x='228' y='188' width='2' height='2'/%3E%3Crect x='56' y='236' width='4' height='4' fill='%23fee761'/%3E%3Crect x='196' y='108' width='2' height='2' fill='%232ce8f5'/%3E%3Crect x='120' y='212' width='2' height='2' fill='%238b9bb4'/%3E%3Crect x='36' y='96' width='2' height='2' fill='%238b9bb4'/%3E%3Crect x='236' y='16' width='2' height='2'/%3E%3Crect x='172' y='164' width='2' height='2' fill='%235a6988'/%3E%3Crect x='104' y='44' width='2' height='2' fill='%235a6988'/%3E%3C/g%3E%3C/svg%3E");
   background-attachment: fixed;
 }

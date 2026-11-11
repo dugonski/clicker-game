@@ -45,7 +45,7 @@ const Mission: React.FC<Props> = ({ current, next, collected, progress, ready, o
         collected on {planetLabel(current)} ({percent}%)
       </p>
       <button type="button" className={styles.launch} disabled={!ready} onClick={onLaunch}>
-        🚀 {ready ? `Launch to ${planetLabel(next)}` : 'Preparing launch…'}
+        {ready ? `Launch to ${planetLabel(next)}` : 'Preparing launch…'}
       </button>
       <p className={styles.hint}>Arriving at a new planet doubles all stardust income.</p>
     </section>

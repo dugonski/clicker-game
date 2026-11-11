@@ -9,6 +9,7 @@ import {
   isBuildingUnlocked,
   owned,
 } from '../../game/logic';
+import PixelSprite from '../PixelSprite/PixelSprite';
 import styles from './Shop.module.css';
 
 interface Props {
@@ -23,14 +24,14 @@ const UpgradeCard: React.FC<{ upgrade: Upgrade; affordable: boolean; onBuy: () =
   onBuy,
 }) => (
   <button type="button" className={styles.upgrade} disabled={!affordable} onClick={onBuy}>
-    <span className={styles.icon} aria-hidden="true">
-      {upgrade.icon}
-    </span>
+    <PixelSprite name={upgrade.icon} className={styles.icon} />
     <span className={styles.info}>
       <span className={styles.name}>{upgrade.name}</span>
       <span className={styles.detail}>{upgrade.description}</span>
     </span>
-    <span className={styles.cost}>✨ {formatNumber(upgrade.cost)}</span>
+    <span className={styles.cost}>
+      <PixelSprite name="stardust" size={12} /> {formatNumber(upgrade.cost)}
+    </span>
   </button>
 );
 
@@ -73,15 +74,15 @@ const Shop: React.FC<Props> = ({ state, onBuyBuilding, onBuyUpgrade }) => {
                 disabled={state.stardust < cost}
                 onClick={() => onBuyBuilding(b.id)}
               >
-                <span className={styles.icon} aria-hidden="true">
-                  {b.icon}
-                </span>
+                <PixelSprite name={b.icon} className={styles.icon} />
                 <span className={styles.info}>
                   <span className={styles.name}>{b.name}</span>
                   <span className={styles.detail}>
                     {b.description} +{formatNumber(buildingRate(state, b))}/s each
                   </span>
-                  <span className={styles.cost}>✨ {formatNumber(cost)}</span>
+                  <span className={styles.cost}>
+                    <PixelSprite name="stardust" size={12} /> {formatNumber(cost)}
+                  </span>
                 </span>
                 <span className={styles.count} aria-label={`${owned(state, b.id)} owned`}>
                   {owned(state, b.id)}
@@ -91,9 +92,7 @@ const Shop: React.FC<Props> = ({ state, onBuyBuilding, onBuyUpgrade }) => {
           })}
           {nextLocked && (
             <div className={styles.locked}>
-              <span className={styles.icon} aria-hidden="true">
-                🔒
-              </span>
+              <PixelSprite name="lock" className={styles.icon} />
               <span className={styles.info}>
                 <span className={styles.name}>???</span>
                 <span className={styles.detail}>Unlocks on {planetLabel(PLANETS[nextLocked.unlockPlanet])}</span>

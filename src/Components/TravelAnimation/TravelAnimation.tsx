@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Planet, planetLabel } from '../../game/data';
+import PixelSprite from '../PixelSprite/PixelSprite';
 import PlanetSphere from '../PlanetSphere/PlanetSphere';
 import styles from './TravelAnimation.module.css';
 
@@ -30,7 +31,7 @@ const TravelAnimation: React.FC<Props> = ({ from, to, onArrive }) => {
         top: `${Math.random() * 100}%`,
         delay: `${-Math.random() * 1.2}s`,
         duration: `${0.5 + Math.random() * 0.9}s`,
-        width: `${30 + Math.random() * 90}px`,
+        width: `${(2 + Math.floor(Math.random() * 6)) * 16}px`,
       })),
     []
   );
@@ -48,15 +49,15 @@ const TravelAnimation: React.FC<Props> = ({ from, to, onArrive }) => {
       </div>
 
       <div className={styles.from}>
-        <PlanetSphere planet={from.id} size="min(16rem, 50vw)" />
+        <PlanetSphere planet={from.id} />
       </div>
       <div className={styles.to}>
-        <PlanetSphere planet={to.id} size="min(16rem, 50vw)" />
+        <PlanetSphere planet={to.id} />
       </div>
 
       <div className={styles.rocket} aria-hidden="true">
         <span className={styles.flame} />
-        <span className={styles.ship}>🚀</span>
+        <PixelSprite name="rocket" size={96} className={styles.ship} />
       </div>
 
       <p className={styles.caption}>

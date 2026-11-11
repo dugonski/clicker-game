@@ -46,7 +46,7 @@ const PlanetClicker: React.FC<Props> = ({ planet, perClick, onClick }) => {
         onClick={handleClick}
         aria-label={`Click ${planet.name} to collect stardust`}
       >
-        <PlanetSphere planet={planet.id} size="var(--planet-size)" />
+        <PlanetSphere planet={planet.id} />
         {floaters.map((f) => (
           <span
             key={f.id}

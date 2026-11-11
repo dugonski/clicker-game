@@ -1,3 +1,5 @@
+import { SpriteName } from '../pixel/sprites';
+
 export interface Planet {
   id: string;
   name: string;
@@ -11,7 +13,7 @@ export interface Building {
   id: string;
   name: string;
   plural: string;
-  icon: string;
+  icon: SpriteName;
   description: string;
   baseCost: number;
   /** Stardust per second produced by a single unit. */
@@ -27,7 +29,7 @@ export type UpgradeTarget =
 export interface Upgrade {
   id: string;
   name: string;
-  icon: string;
+  icon: SpriteName;
   description: string;
   cost: number;
   target: UpgradeTarget;
@@ -49,7 +51,7 @@ export const BUILDINGS: Building[] = [
     id: 'astronaut',
     name: 'Astronaut',
     plural: 'Astronauts',
-    icon: '🧑‍🚀',
+    icon: 'astronaut',
     description: 'Collects stardust by hand.',
     baseCost: 15,
     baseRate: 0.1,
@@ -59,7 +61,7 @@ export const BUILDINGS: Building[] = [
     id: 'engineer',
     name: 'Engineer',
     plural: 'Engineers',
-    icon: '🧑‍🔧',
+    icon: 'engineer',
     description: 'Keeps the machines running.',
     baseCost: 100,
     baseRate: 1,
@@ -69,7 +71,7 @@ export const BUILDINGS: Building[] = [
     id: 'launchpad',
     name: 'Launch Pad',
     plural: 'Launch Pads',
-    icon: '🏗️',
+    icon: 'launchpad',
     description: 'Ground support for every mission.',
     baseCost: 1_100,
     baseRate: 8,
@@ -79,7 +81,7 @@ export const BUILDINGS: Building[] = [
     id: 'rocket',
     name: 'Rocket',
     plural: 'Rockets',
-    icon: '🚀',
+    icon: 'rocket',
     description: 'Hauls stardust back from orbit.',
     baseCost: 12_000,
     baseRate: 47,
@@ -89,7 +91,7 @@ export const BUILDINGS: Building[] = [
     id: 'satellite',
     name: 'Satellite',
     plural: 'Satellites',
-    icon: '🛰️',
+    icon: 'satellite',
     description: 'Scans the void for rich deposits.',
     baseCost: 130_000,
     baseRate: 260,
@@ -99,7 +101,7 @@ export const BUILDINGS: Building[] = [
     id: 'rover',
     name: 'Rover',
     plural: 'Rovers',
-    icon: '🤖',
+    icon: 'rover',
     description: 'Tireless surface explorer.',
     baseCost: 1_400_000,
     baseRate: 1_400,
@@ -109,7 +111,7 @@ export const BUILDINGS: Building[] = [
     id: 'colony',
     name: 'Space Colony',
     plural: 'Space Colonies',
-    icon: '🏙️',
+    icon: 'colony',
     description: 'A permanent home among the stars.',
     baseCost: 20_000_000,
     baseRate: 7_800,
@@ -119,7 +121,7 @@ export const BUILDINGS: Building[] = [
     id: 'station',
     name: 'Space Station',
     plural: 'Space Stations',
-    icon: '🛸',
+    icon: 'station',
     description: 'An orbital refinery and research hub.',
     baseCost: 330_000_000,
     baseRate: 44_000,
@@ -129,7 +131,7 @@ export const BUILDINGS: Building[] = [
     id: 'miner',
     name: 'Ring Miner',
     plural: 'Ring Miners',
-    icon: '⛏️',
+    icon: 'miner',
     description: 'Harvests ice and rock from planetary rings.',
     baseCost: 5_100_000_000,
     baseRate: 260_000,
@@ -139,7 +141,7 @@ export const BUILDINGS: Building[] = [
     id: 'telescope',
     name: 'Deep Space Telescope',
     plural: 'Deep Space Telescopes',
-    icon: '🔭',
+    icon: 'telescope',
     description: 'Finds stardust light-years away.',
     baseCost: 75_000_000_000,
     baseRate: 1_600_000,
@@ -149,7 +151,7 @@ export const BUILDINGS: Building[] = [
     id: 'starship',
     name: 'Starship',
     plural: 'Starships',
-    icon: '🌠',
+    icon: 'starship',
     description: 'A fleet-class interplanetary vessel.',
     baseCost: 1_000_000_000_000,
     baseRate: 10_000_000,
@@ -159,7 +161,7 @@ export const BUILDINGS: Building[] = [
     id: 'warpgate',
     name: 'Warp Gate',
     plural: 'Warp Gates',
-    icon: '🌀',
+    icon: 'warpgate',
     description: 'Bends space to bring the stars closer.',
     baseCost: 14_000_000_000_000,
     baseRate: 65_000_000,
@@ -195,7 +197,7 @@ const buildingUpgrades: Upgrade[] = BUILDINGS.flatMap((building) =>
 const clickUpgrades: Upgrade[] = CLICK_TIERS.map((tier, i) => ({
   id: `click-${i + 2}`,
   name: `Mission Control ${ROMAN[i]}`,
-  icon: '👆',
+  icon: 'click',
   description: 'Clicks are twice as powerful and gain +2% of your stardust per second.',
   cost: tier.cost,
   target: { kind: 'click' as const, clicks: tier.clicks },

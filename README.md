@@ -1,6 +1,6 @@
 # 🚀 Space Clicker
 
-An incremental clicker game about travelling across the Solar System, built with React, TypeScript, and CSS Modules.
+A pixel-art incremental clicker game about travelling across the Solar System, built with React, TypeScript, and CSS Modules.
 
 You start on Earth with nothing but a click. Collect stardust, hire a crew, build a fleet, and launch from planet to planet until you reach the edge of the Solar System.
 
@@ -39,6 +39,14 @@ Each launch plays a short travel animation: the rocket leaves the current planet
 
 Each unit costs 15% more than the previous one of its kind.
 
+## 👾 Pixel art
+
+Everything on screen is pixel art, and none of it comes from image files:
+
+- **Planets** are rendered in code on a 64×64 canvas and scaled up. Each pixel is projected onto a sphere, coloured by a small procedural texture, and shaded with a 4-step dithered ramp, so the planets rotate for real.
+- **Icons** (crew, fleet, cursor, lock, stardust) are 12×12 sprites written as text grids in `src/pixel/sprites.ts`, one character per pixel.
+- **Interface** uses hard-edged panels, stepped animations, and the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) and [VT323](https://fonts.google.com/specimen/VT323) fonts (bundled through Fontsource, so the game works offline).
+
 ## 🛠️ Getting started
 
 Requires [Node.js](https://nodejs.org/) and npm.
@@ -68,18 +76,22 @@ src/
 │   ├── data.ts        # Planets, crew/fleet, and upgrades (edit here to add content)
 │   ├── logic.ts       # Game state, reducer, and all the maths
 │   └── format.ts      # Number formatting (1.23K, 4.50M…)
+├── pixel/
+│   ├── sprites.ts         # 12×12 icon sprites and their colour palette
+│   └── planetRenderer.ts  # Procedural pixel-art planets
 ├── hooks/
 │   └── useGame.ts     # Game loop and auto-save
 ├── Components/
+│   ├── PixelSprite/     # Draws a sprite from sprites.ts
 │   ├── PlanetClicker/   # The clickable planet
-│   ├── PlanetSphere/    # Planets drawn with pure CSS
+│   ├── PlanetSphere/    # Rotating planet on a canvas
 │   ├── Mission/         # Progress bar and launch button
 │   ├── Shop/            # Upgrades and crew & fleet lists
 │   └── TravelAnimation/ # The trip between planets
 └── App.tsx
 ```
 
-Adding a new planet, unit, or upgrade tier only requires a new entry in `src/game/data.ts` (plus a CSS class in `PlanetSphere.module.css` for a new planet's look).
+Adding a new upgrade tier only requires a new entry in `src/game/data.ts`. A new unit also needs a sprite in `src/pixel/sprites.ts`, and a new planet needs a surface in `src/pixel/planetRenderer.ts`.
 
 ## 🔧 Technologies
 

@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 24rem;
+  grid-template-columns: minmax(0, 1fr) 26rem;
   min-height: 100vh;
 }
 
@@ -17,18 +17,22 @@
 
 .title {
   margin: 0;
-  font-size: 1rem;
-  letter-spacing: 0.3em;
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
+  text-shadow: 2px 2px 0 var(--ink);
 }
 
 .location {
-  margin: 0.4rem 0 0;
+  margin: 0.75rem 0 0;
   color: var(--muted);
 }
 
 .location strong {
+  font-weight: 400;
   color: var(--text);
 }
 
@@ -38,25 +42,27 @@
 }
 
 .stardust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   margin: 0;
-  font-size: 2.75rem;
-  font-weight: 800;
+  font-family: var(--font-title);
+  font-size: 28px;
   color: var(--stardust);
-  font-variant-numeric: tabular-nums;
+  text-shadow: 4px 4px 0 var(--ink);
 }
 
 .rates {
-  margin: 0.25rem 0 0;
-  font-size: 0.9rem;
+  margin: 0.75rem 0 0;
   color: var(--muted);
-  font-variant-numeric: tabular-nums;
 }
 
 .reset {
   margin-top: auto;
   padding: 1.5rem 0.5rem 0;
   font: inherit;
-  font-size: 0.75rem;
+  font-size: 18px;
   color: var(--muted);
   background: none;
   border: none;
@@ -74,8 +80,8 @@
   top: 0;
   padding: 1.5rem 1.25rem;
   overflow-y: auto;
-  background: rgba(8, 10, 24, 0.75);
-  border-left: 1px solid var(--border);
+  background: #0c0e24;
+  border-left: var(--px) solid var(--border);
   box-sizing: border-box;
 }
 
@@ -88,11 +94,15 @@
     padding: 1.5rem 1rem;
   }
 
+  .stardust {
+    font-size: 22px;
+  }
+
   .sidebar {
     position: static;
     height: auto;
     padding: 1.5rem 1rem;
     border-left: none;
-    border-top: 1px solid var(--border);
+    border-top: var(--px) solid var(--border);
   }
 }
