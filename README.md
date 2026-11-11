@@ -4,6 +4,8 @@ A pixel-art incremental clicker game about travelling across the Solar System, b
 
 You start on Earth with nothing but a click. Collect stardust, hire a crew, build a fleet, and launch from planet to planet until you reach the edge of the Solar System.
 
+**▶️ Play it online: [dugonski.github.io/clicker-game](https://dugonski.github.io/clicker-game/)**
+
 > ⚠️ This project was created for **learning purposes** as part of my studies in Software Engineering. It serves as a hands-on exercise to practice React, TypeScript, and component-based architecture.
 
 ## 🎮 How to play
@@ -67,6 +69,10 @@ Other scripts:
 |-----------------|-------------------------------------------|
 | `npm test`      | Runs the unit and component tests         |
 | `npm run build` | Creates a production build in `build/`    |
+
+## 🌐 Deployment
+
+Every push to `main` runs the tests, builds the game, and publishes it to GitHub Pages through the workflow in `.github/workflows/deploy.yml`. The repository's Pages source must be set to **GitHub Actions** (Settings → Pages).
 
 ## 📁 Project structure
 
