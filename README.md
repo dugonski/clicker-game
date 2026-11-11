@@ -44,7 +44,7 @@ Each unit costs 15% more than the previous one of its kind.
 Everything on screen is pixel art, and none of it comes from image files:
 
 - **Planets** are rendered in code on a 64×64 canvas and scaled up. Each pixel is projected onto a sphere, coloured by a small procedural texture, and shaded with a 4-step dithered ramp, so the planets rotate for real.
-- **Icons** (crew, fleet, cursor, lock, stardust) are 12×12 sprites written as text grids in `src/pixel/sprites.ts`, one character per pixel.
+- **Icons** (crew, fleet, cursor, lock, stardust) are 16×16 sprites, shaded with a 22-colour palette and written as text grids in `src/pixel/sprites.ts`, one character per pixel.
 - **Interface** uses hard-edged panels, stepped animations, and the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) and [VT323](https://fonts.google.com/specimen/VT323) fonts (bundled through Fontsource, so the game works offline).
 
 ## 🛠️ Getting started
@@ -77,7 +77,7 @@ src/
 │   ├── logic.ts       # Game state, reducer, and all the maths
 │   └── format.ts      # Number formatting (1.23K, 4.50M…)
 ├── pixel/
-│   ├── sprites.ts         # 12×12 icon sprites and their colour palette
+│   ├── sprites.ts         # 16×16 icon sprites and their colour palette
 │   └── planetRenderer.ts  # Procedural pixel-art planets
 ├── hooks/
 │   └── useGame.ts     # Game loop and auto-save

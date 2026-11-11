@@ -1,4 +1,4 @@
-import { SPRITES, PALETTE } from '../pixel/sprites';
+import { SPRITES, PALETTE, SPRITE_PIXELS } from '../pixel/sprites';
 import { PLANETS, UPGRADES } from './data';
 import { formatNumber } from './format';
 import {
@@ -103,11 +103,11 @@ test('formatNumber', () => {
   expect(formatNumber(3_000_000)).toBe('3.00M');
 });
 
-test('sprites are 12x12 and only use palette colours', () => {
+test('sprites are square and only use palette colours', () => {
   Object.values(SPRITES).forEach((rows) => {
-    expect(rows).toHaveLength(12);
+    expect(rows).toHaveLength(SPRITE_PIXELS);
     rows.forEach((row) => {
-      expect(row).toHaveLength(12);
+      expect(row).toHaveLength(SPRITE_PIXELS);
       row.split('').forEach((char) => expect(char === '.' || char in PALETTE).toBe(true));
     });
   });

@@ -30,7 +30,7 @@ const UpgradeCard: React.FC<{ upgrade: Upgrade; affordable: boolean; onBuy: () =
       <span className={styles.detail}>{upgrade.description}</span>
     </span>
     <span className={styles.cost}>
-      <PixelSprite name="stardust" size={12} /> {formatNumber(upgrade.cost)}
+      <PixelSprite name="stardust" size={16} /> {formatNumber(upgrade.cost)}
     </span>
   </button>
 );
@@ -81,7 +81,7 @@ const Shop: React.FC<Props> = ({ state, onBuyBuilding, onBuyUpgrade }) => {
                     {b.description} +{formatNumber(buildingRate(state, b))}/s each
                   </span>
                   <span className={styles.cost}>
-                    <PixelSprite name="stardust" size={12} /> {formatNumber(cost)}
+                    <PixelSprite name="stardust" size={16} /> {formatNumber(cost)}
                   </span>
                 </span>
                 <span className={styles.count} aria-label={`${owned(state, b.id)} owned`}>

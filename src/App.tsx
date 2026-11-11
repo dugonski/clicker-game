@@ -48,7 +48,7 @@ export default function App() {
 
         <div className={styles.stats}>
           <p className={styles.stardust} aria-label="Stardust">
-            <PixelSprite name="stardust" size={36} /> {formatNumber(state.stardust)}
+            <PixelSprite name="stardust" size={48} /> {formatNumber(state.stardust)}
           </p>
           <p className={styles.rates}>
             {formatNumber(stardustPerSecond(state))} per second · {formatNumber(perClick)} per click

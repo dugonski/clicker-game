@@ -9,7 +9,7 @@ interface Props {
 }
 
 /** Renders a pixel-art sprite as crisp SVG rectangles. */
-const PixelSprite: React.FC<Props> = ({ name, size = 36, className }) => {
+const PixelSprite: React.FC<Props> = ({ name, size = 48, className }) => {
   const rows = SPRITES[name];
   const rects: React.ReactNode[] = [];
 
