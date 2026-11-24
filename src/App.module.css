@@ -41,7 +41,7 @@
   text-align: center;
 }
 
-.stardust {
+.moves {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +49,7 @@
   margin: 0;
   font-family: var(--font-title);
   font-size: 28px;
-  color: var(--stardust);
+  color: var(--currency);
   text-shadow: 4px 4px 0 var(--ink);
 }
 
@@ -80,7 +80,7 @@
   top: 0;
   padding: 1.5rem 1.25rem;
   overflow-y: auto;
-  background: #0c0e24;
+  background: var(--sidebar);
   border-left: var(--px) solid var(--border);
   box-sizing: border-box;
 }
@@ -94,7 +94,7 @@
     padding: 1.5rem 1rem;
   }
 
-  .stardust {
+  .moves {
     font-size: 22px;
   }
 

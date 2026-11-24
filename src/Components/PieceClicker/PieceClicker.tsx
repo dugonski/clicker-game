@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Planet } from '../../game/data';
+import { Rank } from '../../game/data';
 import { formatNumber } from '../../game/format';
-import PlanetSphere from '../PlanetSphere/PlanetSphere';
-import styles from './PlanetClicker.module.css';
+import ModelView from '../ModelView/ModelView';
+import styles from './PieceClicker.module.css';
 
 interface Props {
-  planet: Planet;
+  rank: Rank;
   perClick: number;
   onClick: () => void;
 }
@@ -17,8 +17,8 @@ interface Floater {
   text: string;
 }
 
-/** The big planet in the middle of the screen: click it to collect stardust. */
-const PlanetClicker: React.FC<Props> = ({ planet, perClick, onClick }) => {
+/** The big spinning piece in the middle of the screen: click it to make moves. */
+const PieceClicker: React.FC<Props> = ({ rank, perClick, onClick }) => {
   const [floaters, setFloaters] = useState<Floater[]>([]);
   const nextId = useRef(0);
 
@@ -44,9 +44,15 @@ const PlanetClicker: React.FC<Props> = ({ planet, perClick, onClick }) => {
         type="button"
         className={styles.button}
         onClick={handleClick}
-        aria-label={`Click ${planet.name} to collect stardust`}
+        aria-label={`Click the ${rank.piece} to make moves`}
       >
-        <PlanetSphere planet={planet.id} />
+        <ModelView
+          model={rank.piece}
+          finish={rank.finish}
+          pixels={64}
+          size="var(--piece-size)"
+          turnSeconds={10}
+        />
         {floaters.map((f) => (
           <span
             key={f.id}
@@ -62,4 +68,4 @@ const PlanetClicker: React.FC<Props> = ({ planet, perClick, onClick }) => {
   );
 };
 
-export default PlanetClicker;
+export default PieceClicker;

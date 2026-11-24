@@ -1,0 +1,246 @@
+/* Total length must match PROMOTION_DURATION_MS in PromotionAnimation.tsx */
+.overlay {
+  --duration: 6s;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  overflow: hidden;
+  background: var(--bg);
+  animation: fade var(--duration) steps(40) forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  5%,
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.stage {
+  --board: min(84vw, 56vh, 384px);
+  --sq: calc(var(--board) / 8);
+  position: relative;
+  width: var(--board);
+  height: var(--board);
+}
+
+.board {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  box-shadow: 0 0 0 var(--px) var(--ink), 0 0 0 calc(3 * var(--px)) #4a2f1a, 0 0 0 calc(4 * var(--px)) var(--ink);
+  animation: boardOut var(--duration) steps(1) forwards;
+}
+
+.light {
+  background: #e8cfa4;
+}
+
+.dark {
+  background: #9b6a45;
+}
+
+/* A piece canvas is 1.5 squares wide and stands on the bottom of its square. */
+.piece {
+  position: absolute;
+  left: calc(var(--sq) * 4.5 - var(--sq) * 0.75);
+  width: calc(var(--sq) * 1.5);
+  height: calc(var(--sq) * 1.5);
+}
+
+.enemy {
+  top: calc(var(--sq) * 1 - var(--sq) * 1.5);
+  animation: topple var(--duration) steps(1) forwards;
+}
+
+/* Starts on the second rank and hops up one square at a time. */
+.hero {
+  top: calc(var(--sq) * 7 - var(--sq) * 1.5);
+  animation: march var(--duration) steps(5, jump-end) forwards;
+}
+
+@keyframes march {
+  0%,
+  10% {
+    transform: translateY(0);
+  }
+  45%,
+  100% {
+    transform: translateY(calc(var(--sq) * -5));
+  }
+}
+
+/* The beaten king tips over and fades in pixel-sized steps. */
+@keyframes topple {
+  0%,
+  48% {
+    transform: none;
+    opacity: 1;
+  }
+  52% {
+    transform: rotate(45deg) translate(8%, 4%);
+  }
+  56% {
+    transform: rotate(90deg) translate(20%, 10%);
+    opacity: 1;
+  }
+  62%,
+  100% {
+    transform: rotate(90deg) translate(20%, 10%);
+    opacity: 0;
+  }
+}
+
+@keyframes boardOut {
+  0%,
+  64% {
+    opacity: 1;
+  }
+  65%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.flash {
+  position: absolute;
+  inset: calc(-4 * var(--px));
+  background: #fff4dc;
+  opacity: 0;
+  animation: flash var(--duration) steps(1) forwards;
+}
+
+@keyframes flash {
+  0%,
+  62% {
+    opacity: 0;
+  }
+  63% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0.5;
+  }
+  67%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.reward {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: reward var(--duration) steps(1) forwards;
+}
+
+@keyframes reward {
+  0%,
+  64% {
+    opacity: 0;
+  }
+  65%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.caption {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text);
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+.playing,
+.mate,
+.promoted {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: 0 1rem;
+  opacity: 0;
+}
+
+.playing {
+  animation: show var(--duration) steps(1) forwards;
+}
+
+.mate {
+  color: var(--accent);
+  animation: mate var(--duration) steps(1) forwards;
+}
+
+.promoted {
+  color: var(--currency);
+  animation: promoted var(--duration) steps(1) forwards;
+}
+
+@keyframes show {
+  0%,
+  47% {
+    opacity: 1;
+  }
+  48%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes mate {
+  0%,
+  47% {
+    opacity: 0;
+  }
+  48%,
+  62% {
+    opacity: 1;
+  }
+  63%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes promoted {
+  0%,
+  66% {
+    opacity: 0;
+  }
+  67%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .enemy,
+  .flash {
+    animation: none;
+  }
+  .hero {
+    transform: translateY(calc(var(--sq) * -5));
+  }
+}

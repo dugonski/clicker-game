@@ -1,7 +1,7 @@
 .wrap {
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
 .button {
@@ -16,7 +16,7 @@
   user-select: none;
 }
 
-/* Snap down by exactly one art pixel of the planet when pressed */
+/* Hop down by exactly one art pixel when pressed */
 .button:active {
   transform: translateY(var(--px));
 }
@@ -31,7 +31,7 @@
   pointer-events: none;
   font-family: var(--font-title);
   font-size: 14px;
-  color: var(--stardust);
+  color: var(--currency);
   text-shadow: 2px 2px 0 var(--ink);
   white-space: nowrap;
   animation: float 0.8s steps(8) forwards;

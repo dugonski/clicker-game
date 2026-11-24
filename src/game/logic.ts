@@ -1,11 +1,11 @@
-import { BUILDINGS, COST_GROWTH, PLANETS, PLANET_BONUS, UPGRADES, Building, Upgrade } from './data';
+import { BUILDINGS, COST_GROWTH, RANKS, RANK_BONUS, UPGRADES, Building, Upgrade } from './data';
 
 export interface GameState {
-  stardust: number;
+  moves: number;
   totalEarned: number;
-  /** Stardust collected since arriving at the current planet. */
-  planetEarned: number;
-  planetIndex: number;
+  /** Moves earned since the current title was won. */
+  rankEarned: number;
+  rankIndex: number;
   clicks: number;
   buildings: Record<string, number>;
   upgrades: string[];
@@ -16,14 +16,14 @@ export type GameAction =
   | { type: 'tick'; seconds: number }
   | { type: 'buyBuilding'; id: string }
   | { type: 'buyUpgrade'; id: string }
-  | { type: 'travel' }
+  | { type: 'promote' }
   | { type: 'reset' };
 
 export const initialState: GameState = {
-  stardust: 0,
+  moves: 0,
   totalEarned: 0,
-  planetEarned: 0,
-  planetIndex: 0,
+  rankEarned: 0,
+  rankIndex: 0,
   clicks: 0,
   buildings: {},
   upgrades: [],
@@ -34,7 +34,7 @@ const findUpgrade = (id: string) => UPGRADES.find((u) => u.id === id);
 
 export const owned = (state: GameState, buildingId: string) => state.buildings[buildingId] ?? 0;
 
-export const planetMultiplier = (state: GameState) => Math.pow(PLANET_BONUS, state.planetIndex);
+export const rankMultiplier = (state: GameState) => Math.pow(RANK_BONUS, state.rankIndex);
 
 export const buildingCost = (state: GameState, building: Building) =>
   Math.ceil(building.baseCost * Math.pow(COST_GROWTH, owned(state, building.id)));
@@ -42,24 +42,24 @@ export const buildingCost = (state: GameState, building: Building) =>
 const purchasedUpgrades = (state: GameState) =>
   state.upgrades.map(findUpgrade).filter((u): u is Upgrade => u !== undefined);
 
-/** Stardust per second produced by a single unit of this building, all bonuses included. */
+/** Moves per second produced by a single unit of this building, all bonuses included. */
 export const buildingRate = (state: GameState, building: Building) => {
   const tiers = purchasedUpgrades(state).filter(
     (u) => u.target.kind === 'building' && u.target.buildingId === building.id
   ).length;
-  return building.baseRate * Math.pow(2, tiers) * planetMultiplier(state);
+  return building.baseRate * Math.pow(2, tiers) * rankMultiplier(state);
 };
 
-export const stardustPerSecond = (state: GameState) =>
+export const movesPerSecond = (state: GameState) =>
   BUILDINGS.reduce((sum, b) => sum + owned(state, b.id) * buildingRate(state, b), 0);
 
-export const stardustPerClick = (state: GameState) => {
+export const movesPerClick = (state: GameState) => {
   const tiers = purchasedUpgrades(state).filter((u) => u.target.kind === 'click').length;
-  return Math.pow(2, tiers) * planetMultiplier(state) + stardustPerSecond(state) * 0.02 * tiers;
+  return Math.pow(2, tiers) * rankMultiplier(state) + movesPerSecond(state) * 0.02 * tiers;
 };
 
 export const isBuildingUnlocked = (state: GameState, building: Building) =>
-  building.unlockPlanet <= state.planetIndex;
+  building.unlockRank <= state.rankIndex;
 
 const isUpgradeUnlocked = (state: GameState, upgrade: Upgrade) =>
   upgrade.target.kind === 'click'
@@ -72,39 +72,39 @@ export const availableUpgrades = (state: GameState) =>
     (a, b) => a.cost - b.cost
   );
 
-export const nextPlanet = (state: GameState) => PLANETS[state.planetIndex + 1] ?? null;
+export const nextRank = (state: GameState) => RANKS[state.rankIndex + 1] ?? null;
 
-/** Progress towards the next planet, from 0 to 1. */
-export const travelProgress = (state: GameState) => {
-  const goal = PLANETS[state.planetIndex].travelGoal;
-  return goal === null ? 0 : Math.min(1, state.planetEarned / goal);
+/** Progress towards the next title match, from 0 to 1. */
+export const promotionProgress = (state: GameState) => {
+  const goal = RANKS[state.rankIndex].promotionGoal;
+  return goal === null ? 0 : Math.min(1, state.rankEarned / goal);
 };
 
-export const canTravel = (state: GameState) => nextPlanet(state) !== null && travelProgress(state) >= 1;
+export const canPromote = (state: GameState) => nextRank(state) !== null && promotionProgress(state) >= 1;
 
 const earn = (state: GameState, amount: number): GameState => ({
   ...state,
-  stardust: state.stardust + amount,
+  moves: state.moves + amount,
   totalEarned: state.totalEarned + amount,
-  planetEarned: state.planetEarned + amount,
+  rankEarned: state.rankEarned + amount,
 });
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'click':
-      return { ...earn(state, stardustPerClick(state)), clicks: state.clicks + 1 };
+      return { ...earn(state, movesPerClick(state)), clicks: state.clicks + 1 };
 
     case 'tick':
-      return action.seconds > 0 ? earn(state, stardustPerSecond(state) * action.seconds) : state;
+      return action.seconds > 0 ? earn(state, movesPerSecond(state) * action.seconds) : state;
 
     case 'buyBuilding': {
       const building = findBuilding(action.id);
       if (!building || !isBuildingUnlocked(state, building)) return state;
       const cost = buildingCost(state, building);
-      if (state.stardust < cost) return state;
+      if (state.moves < cost) return state;
       return {
         ...state,
-        stardust: state.stardust - cost,
+        moves: state.moves - cost,
         buildings: { ...state.buildings, [building.id]: owned(state, building.id) + 1 },
       };
     }
@@ -112,17 +112,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
     case 'buyUpgrade': {
       const upgrade = findUpgrade(action.id);
       if (!upgrade || state.upgrades.includes(upgrade.id)) return state;
-      if (!isUpgradeUnlocked(state, upgrade) || state.stardust < upgrade.cost) return state;
+      if (!isUpgradeUnlocked(state, upgrade) || state.moves < upgrade.cost) return state;
       return {
         ...state,
-        stardust: state.stardust - upgrade.cost,
+        moves: state.moves - upgrade.cost,
         upgrades: [...state.upgrades, upgrade.id],
       };
     }
 
-    case 'travel':
-      if (!canTravel(state)) return state;
-      return { ...state, planetIndex: state.planetIndex + 1, planetEarned: 0 };
+    case 'promote':
+      if (!canPromote(state)) return state;
+      return { ...state, rankIndex: state.rankIndex + 1, rankEarned: 0 };
 
     case 'reset':
       return initialState;
@@ -153,10 +153,10 @@ export function sanitizeState(raw: unknown): GameState {
   const upgrades = UPGRADES.map((u) => u.id).filter((id) => rawUpgrades.includes(id));
 
   return {
-    stardust: finiteOr(data.stardust, 0),
+    moves: finiteOr(data.moves, 0),
     totalEarned: finiteOr(data.totalEarned, 0),
-    planetEarned: finiteOr(data.planetEarned, 0),
-    planetIndex: Math.min(PLANETS.length - 1, Math.floor(finiteOr(data.planetIndex, 0))),
+    rankEarned: finiteOr(data.rankEarned, 0),
+    rankIndex: Math.min(RANKS.length - 1, Math.floor(finiteOr(data.rankIndex, 0))),
     clicks: Math.floor(finiteOr(data.clicks, 0)),
     buildings,
     upgrades,

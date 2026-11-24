@@ -1,4 +1,4 @@
-.mission {
+.panel {
   width: calc(100% - 2 * var(--px));
   max-width: 30rem;
   margin: var(--px);
@@ -32,7 +32,7 @@
 .fill {
   height: 100%;
   /* Chunky segments instead of a smooth bar */
-  background: repeating-linear-gradient(90deg, #63c74d 0 12px, #3e8948 12px 16px);
+  background: repeating-linear-gradient(90deg, var(--accent) 0 12px, #b07a2e 12px 16px);
 }
 
 .text {
@@ -46,31 +46,31 @@
   color: var(--muted);
 }
 
-.launch {
+.play {
   margin-top: 1rem;
   padding: 12px 16px;
   font-family: var(--font-title);
   font-size: 11px;
   color: var(--ink);
-  background: #fee761;
+  background: var(--accent);
   border: none;
   box-shadow:
     0 calc(-1 * var(--px)) 0 0 var(--ink),
     0 var(--px) 0 0 var(--ink),
     calc(-1 * var(--px)) 0 0 0 var(--ink),
     var(--px) 0 0 0 var(--ink),
-    inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 #f77622;
+    inset calc(-1 * var(--px)) calc(-1 * var(--px)) 0 0 #b07a2e;
   cursor: pointer;
   animation: blink 0.8s steps(1) infinite;
 }
 
-.launch:active:enabled {
+.play:active:enabled {
   transform: translateY(var(--px));
 }
 
-.launch:disabled {
+.play:disabled {
   color: var(--muted);
-  background: #262b44;
+  background: #3a2920;
   box-shadow:
     0 calc(-1 * var(--px)) 0 0 var(--ink),
     0 var(--px) 0 0 var(--ink),
@@ -80,19 +80,19 @@
   animation: none;
 }
 
-.launch:focus-visible {
+.play:focus-visible {
   outline: var(--px) solid var(--accent);
   outline-offset: 8px;
 }
 
 @keyframes blink {
   50% {
-    background: #ffffff;
+    background: #fff4dc;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .launch {
+  .play {
     animation: none;
   }
 }
