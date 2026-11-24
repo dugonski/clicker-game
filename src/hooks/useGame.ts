@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { gameReducer, initialState, sanitizeState, GameState } from '../game/logic';
 
-const SAVE_KEY = 'space-clicker-save';
+const SAVE_KEY = 'chess-clicker-save';
 const TICK_MS = 100;
 const SAVE_MS = 5_000;
 

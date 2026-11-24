@@ -1,6 +1,6 @@
 {
-  "short_name": "Space Clicker",
-  "name": "Space Clicker",
+  "short_name": "Chess Clicker",
+  "name": "Chess Clicker",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#07081a",
-  "background_color": "#07081a"
+  "theme_color": "#1b1310",
+  "background_color": "#1b1310"
 }

@@ -1,8 +1,8 @@
-# 🚀 Space Clicker
+# ♟️ Chess Clicker
 
-A pixel-art incremental clicker game about travelling across the Solar System, built with React, TypeScript, and CSS Modules.
+A pixel-art incremental clicker game about climbing the chess ranks, built with React, TypeScript, three.js, and CSS Modules.
 
-You start on Earth with nothing but a click. Collect stardust, hire a crew, build a fleet, and launch from planet to planet until you reach the edge of the Solar System.
+You start as a Beginner with a single pawn. Click it to make moves, collect pieces and chess tools that play for you, win title matches, and work your way up to World Champion.
 
 **▶️ Play it online: [dugonski.github.io/clicker-game](https://dugonski.github.io/clicker-game/)**
 
@@ -10,44 +10,47 @@ You start on Earth with nothing but a click. Collect stardust, hire a crew, buil
 
 ## 🎮 How to play
 
-1. **Click the planet** to collect stardust ✨.
-2. **Buy crew and fleet** (astronauts, engineers, launch pads, rockets…) to produce stardust automatically every second.
+1. **Click the piece** to make moves, the game's currency.
+2. **Buy pieces and tools** (pawns, knights, bishops, chess clocks…) that make moves automatically every second.
 3. **Buy upgrades** to double what each of them produces, or to make your clicks stronger.
-4. **Fill the mission bar** by collecting enough stardust on the current planet, then press **Launch** to fly to the next one.
+4. **Fill the title bar** by making enough moves with your current title, then press **Play the title match** to earn the next one.
 
 Progress is saved automatically in your browser (`localStorage`). Use *Reset progress* at the bottom of the page to start over.
 
-## 🪐 The journey
+## 🏆 The road to World Champion
 
-Every planet you reach **doubles all stardust income** and unlocks new things to buy. Stardust, crew, and upgrades travel with you.
+Every title you earn **doubles all move income**, unlocks new things to buy, and changes the piece you click. Moves, pieces, and upgrades all carry over.
 
-| # | Planet  | Stardust needed to leave | Unlocks on arrival                  |
-|---|---------|--------------------------|-------------------------------------|
-| 1 | Earth   | 3K                       | Astronaut, Engineer, Launch Pad     |
-| 2 | Moon    | 150K                     | Rocket, Satellite                   |
-| 3 | Mars    | 15M                      | Rover, Space Colony                 |
-| 4 | Jupiter | 600M                     | Space Station                       |
-| 5 | Saturn  | 20B                      | Ring Miner                          |
-| 6 | Uranus  | 600B                     | Deep Space Telescope                |
-| 7 | Neptune | 15T                      | Starship                            |
-| 8 | Pluto   | Final stop (for now)     | Warp Gate                           |
+| # | Title                | Your piece    | Moves needed for the next match | Unlocks                    |
+|---|----------------------|---------------|---------------------------------|----------------------------|
+| 1 | Beginner             | Pawn          | 3K                              | Pawn, Knight, Bishop       |
+| 2 | Club Player          | Knight        | 150K                            | Rook, Queen                |
+| 3 | Candidate Master     | Bishop        | 15M                             | King, Chess Clock          |
+| 4 | FIDE Master          | Rook          | 600M                            | Chessboard                 |
+| 5 | International Master | Queen         | 20B                             | Opening Book               |
+| 6 | Grandmaster          | King          | 600B                            | Chess Club                 |
+| 7 | Super Grandmaster    | Golden king   | 15T                             | Chess Engine               |
+| 8 | World Champion       | Crystal king  | Final title (for now)           | Tournament                 |
 
-Each launch plays a short travel animation: the rocket leaves the current planet, jumps through the stars, and arrives at the next one.
+Each title match plays a short animation: your piece marches up the board, checkmates the black king, and turns into the piece of your new title.
 
 ## ⬆️ Upgrades
 
-- **Crew & fleet upgrades** — e.g. *Astronauts II*, *Astronauts III*… Each tier unlocks when you own 10, 25, 50, and 100 of that unit, and doubles its production.
-- **Mission Control II–V** — unlock after 50, 250, 1,000, and 5,000 clicks. Each tier doubles click power and adds 2% of your stardust per second to every click.
+- **Piece and tool upgrades**: for example *Pawns II*, *Pawns III*, and so on. Each tier unlocks when you own 10, 25, 50, and 100 of that item, and doubles its production.
+- **Tactics Training II–V**: unlock after 50, 250, 1,000, and 5,000 clicks. Each tier doubles click power and adds 2% of your moves per second to every click.
 
-Each unit costs 15% more than the previous one of its kind.
+Each item costs 15% more than the previous one of its kind.
 
-## 👾 Pixel art
+## 👾 3D pieces, 2D pixel art
 
-Everything on screen is pixel art, and none of it comes from image files:
+The chess pieces and the shop items are real **3D models**, drawn through a **pixel-art filter**:
 
-- **Planets** are rendered in code on a 64×64 canvas and scaled up. Each pixel is projected onto a sphere, coloured by a small procedural texture, and shaded with a 4-step dithered ramp, so the planets rotate for real.
-- **Icons** (crew, fleet, cursor, lock, stardust) are 16×16 sprites, shaded with a 22-colour palette and written as text grids in `src/pixel/sprites.ts`, one character per pixel.
-- **Interface** uses hard-edged panels, stepped animations, and the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) and [VT323](https://fonts.google.com/specimen/VT323) fonts (bundled through Fontsource, so the game works offline).
+1. Each model (pieces, clock, board, books, club, engine, trophy) is built in code from three.js shapes: lathed profiles for the pieces, an extruded silhouette for the knight's head, and boxes and cylinders for the rest.
+2. three.js renders the model into a tiny image (64×64 for the big piece, 32×32 for icons). Instead of colours, a custom shader stores the light, the part, and the depth of every pixel.
+3. A filter turns that into pixel art: each part is painted from a 5-colour palette with ordered dithering, depth jumps become dark inner lines, the silhouette gets a one-pixel outline, and a shadow is drawn underneath.
+4. The image is scaled up with `image-rendering: pixelated`, so the pieces can really rotate while still looking hand-pixelled.
+
+The few interface glyphs (the currency, cursor, and lock) are 16×16 sprites written as text grids in `src/pixel/sprites.ts`. The text uses the [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) and [VT323](https://fonts.google.com/specimen/VT323) fonts, bundled through Fontsource so the game works offline.
 
 ## 🛠️ Getting started
 
@@ -79,30 +82,32 @@ Every push to `main` runs the tests, builds the game, and publishes it to GitHub
 ```
 src/
 ├── game/
-│   ├── data.ts        # Planets, crew/fleet, and upgrades (edit here to add content)
+│   ├── data.ts        # Titles, pieces & tools, and upgrades (edit here to add content)
 │   ├── logic.ts       # Game state, reducer, and all the maths
 │   └── format.ts      # Number formatting (1.23K, 4.50M…)
 ├── pixel/
-│   ├── sprites.ts         # 16×16 icon sprites and their colour palette
-│   └── planetRenderer.ts  # Procedural pixel-art planets
+│   ├── models.ts         # 3D models and their colour palettes
+│   ├── modelRenderer.ts  # three.js rendering and the pixel-art filter
+│   └── sprites.ts        # 16×16 interface sprites
 ├── hooks/
 │   └── useGame.ts     # Game loop and auto-save
 ├── Components/
-│   ├── PixelSprite/     # Draws a sprite from sprites.ts
-│   ├── PlanetClicker/   # The clickable planet
-│   ├── PlanetSphere/    # Rotating planet on a canvas
-│   ├── Mission/         # Progress bar and launch button
-│   ├── Shop/            # Upgrades and crew & fleet lists
-│   └── TravelAnimation/ # The trip between planets
+│   ├── ModelView/          # A rotating 3D model as pixel art
+│   ├── Icon/               # Shop icons (3D model or sprite)
+│   ├── PixelSprite/        # Draws a sprite from sprites.ts
+│   ├── PieceClicker/       # The clickable piece
+│   ├── NextTitle/          # Progress bar and title-match button
+│   ├── Shop/               # Upgrades and pieces & tools lists
+│   └── PromotionAnimation/ # The title match
 └── App.tsx
 ```
 
-Adding a new upgrade tier only requires a new entry in `src/game/data.ts`. A new unit also needs a sprite in `src/pixel/sprites.ts`, and a new planet needs a surface in `src/pixel/planetRenderer.ts`.
+Adding a new upgrade tier only requires a new entry in `src/game/data.ts`. A new item that needs a new look also needs a model in `src/pixel/models.ts`.
 
 ## 🔧 Technologies
 
 The technologies utilized in this repository:
 
-[![My Skills](https://skillicons.dev/icons?i=html,css,js,ts,react,git,github)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,ts,react,threejs,git,github)](https://skillicons.dev)
 
 Made with ❤️ by Guilherme Dugonski

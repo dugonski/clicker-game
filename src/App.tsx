@@ -1,37 +1,37 @@
 import React, { useState } from 'react';
-import { PLANETS } from './game/data';
+import { RANKS } from './game/data';
 import { formatNumber } from './game/format';
 import {
-  canTravel,
-  nextPlanet,
-  planetMultiplier,
-  stardustPerClick,
-  stardustPerSecond,
-  travelProgress,
+  canPromote,
+  movesPerClick,
+  movesPerSecond,
+  nextRank,
+  promotionProgress,
+  rankMultiplier,
 } from './game/logic';
 import { useGame } from './hooks/useGame';
+import NextTitle from './Components/NextTitle/NextTitle';
+import PieceClicker from './Components/PieceClicker/PieceClicker';
 import PixelSprite from './Components/PixelSprite/PixelSprite';
-import Mission from './Components/Mission/Mission';
-import PlanetClicker from './Components/PlanetClicker/PlanetClicker';
+import PromotionAnimation from './Components/PromotionAnimation/PromotionAnimation';
 import Shop from './Components/Shop/Shop';
-import TravelAnimation from './Components/TravelAnimation/TravelAnimation';
 import styles from './App.module.css';
 
 export default function App() {
   const { state, dispatch } = useGame();
-  const [traveling, setTraveling] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
-  const planet = PLANETS[state.planetIndex];
-  const destination = nextPlanet(state);
-  const perClick = stardustPerClick(state);
+  const rank = RANKS[state.rankIndex];
+  const next = nextRank(state);
+  const perClick = movesPerClick(state);
 
-  const handleArrive = () => {
-    dispatch({ type: 'travel' });
-    setTraveling(false);
+  const handleMatchOver = () => {
+    dispatch({ type: 'promote' });
+    setPlaying(false);
   };
 
   const handleReset = () => {
-    if (window.confirm('Start over from Earth? All progress will be lost.')) {
+    if (window.confirm('Start over as a Beginner? All progress will be lost.')) {
       dispatch({ type: 'reset' });
     }
   };
@@ -40,31 +40,32 @@ export default function App() {
     <div className={styles.app}>
       <main className={styles.main}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Space Clicker</h1>
+          <h1 className={styles.title}>Chess Clicker</h1>
           <p className={styles.location}>
-            <strong>{planet.name}</strong> · {planet.tagline}
+            <strong>{rank.name}</strong> · {rank.tagline}
           </p>
         </header>
 
         <div className={styles.stats}>
-          <p className={styles.stardust} aria-label="Stardust">
-            <PixelSprite name="stardust" size={48} /> {formatNumber(state.stardust)}
+          <p className={styles.moves}>
+            <PixelSprite name="move" size={48} />
+            <span aria-label="Moves">{formatNumber(state.moves)}</span>
           </p>
           <p className={styles.rates}>
-            {formatNumber(stardustPerSecond(state))} per second · {formatNumber(perClick)} per click
-            {state.planetIndex > 0 && ` · ×${planetMultiplier(state)} planet bonus`}
+            {formatNumber(movesPerSecond(state))} moves per second · {formatNumber(perClick)} per click
+            {state.rankIndex > 0 && ` · ×${rankMultiplier(state)} title bonus`}
           </p>
         </div>
 
-        <PlanetClicker planet={planet} perClick={perClick} onClick={() => dispatch({ type: 'click' })} />
+        <PieceClicker rank={rank} perClick={perClick} onClick={() => dispatch({ type: 'click' })} />
 
-        <Mission
-          current={planet}
-          next={destination}
-          collected={state.planetEarned}
-          progress={travelProgress(state)}
-          ready={canTravel(state) && !traveling}
-          onLaunch={() => setTraveling(true)}
+        <NextTitle
+          current={rank}
+          next={next}
+          earned={state.rankEarned}
+          progress={promotionProgress(state)}
+          ready={canPromote(state) && !playing}
+          onPlay={() => setPlaying(true)}
         />
 
         <button type="button" className={styles.reset} onClick={handleReset}>
@@ -80,7 +81,7 @@ export default function App() {
         />
       </div>
 
-      {traveling && destination && <TravelAnimation from={planet} to={destination} onArrive={handleArrive} />}
+      {playing && next && <PromotionAnimation from={rank} to={next} onDone={handleMatchOver} />}
     </div>
   );
 }

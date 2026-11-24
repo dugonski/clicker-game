@@ -4,5 +4,5 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
-// jsdom has no canvas; the planet component simply skips drawing when there is no context.
+// jsdom has no canvas or WebGL; without a context the 3D models are simply not drawn.
 HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;
